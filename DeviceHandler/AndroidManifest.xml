@@ -37,7 +37,7 @@
         </activity>
 
         <activity
-            android:name=".settings.AdvanceButtonSettings"
+            android:name=".settings.AdvanceButtonsSettings"
             android:theme="@style/DeviceHandlerTheme"
             android:label="@string/advance_buttons_title">
             <intent-filter>
