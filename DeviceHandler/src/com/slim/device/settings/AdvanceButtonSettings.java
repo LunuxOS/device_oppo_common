@@ -27,7 +27,7 @@ import com.slim.device.KernelControl;
 import com.slim.device.R;
 import com.slim.device.util.FileUtils;
 
-public class AdvanceButtonSettings extends PreferenceActivity
+public class AdvanceButtonsSettings extends PreferenceActivity
         implements OnPreferenceChangeListener {
 
     private SwitchPreference mButtonsSwap;
