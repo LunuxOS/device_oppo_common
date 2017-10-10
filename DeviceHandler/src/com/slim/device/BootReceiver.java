@@ -26,7 +26,7 @@ import android.preference.PreferenceManager;
 
 import com.slim.device.KernelControl;
 import com.slim.device.settings.ScreenOffGesture;
-import com.slim.device.settings.SliderSettings;
+import com.slim.device.settings.AdvanceButtonsSettings;
 import com.slim.device.util.FileUtils;
 
 import java.io.File;

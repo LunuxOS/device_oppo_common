@@ -61,7 +61,7 @@ public final class KernelControl {
     /**
      * Enable or disable gesture control.
      */
-    public static void enableGestures(boolean enaFble) {
+    public static void enableGestures(boolean enable) {
         for (int i = 0; i < GESTURE_CONTROL_NODES.length; i++) {
             if (new File(GESTURE_CONTROL_NODES[i]).exists()) {
                 FileUtils.writeLine(GESTURE_CONTROL_NODES[i], enable ? "1" : "0");
