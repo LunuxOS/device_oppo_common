@@ -46,19 +46,19 @@ public class BootReceiver extends BroadcastReceiver {
 
             // Disable slider settings if needed
             if (!KernelControl.hasSlider()) {
-                disableComponent(context, SliderSettings.class.getName());
+                disableComponent(context, AdvanceButtonsSettings.class.getName());
             } else {
-                enableComponent(context, SliderSettings.class.getName());
+                enableComponent(context, AdvanceButtonsSettings.class.getName());
 
                 String sliderTop = getPreferenceString(context, "keycode_top_position", "601");
                 String sliderMiddle = getPreferenceString(context, "keycode_middle_position", "602");
                 String sliderBottom = getPreferenceString(context, "keycode_bottom_position", "603");
-                boolean sliderSwap = getPreferenceBoolean(context, "button_swap", false);
+                boolean buttonsSwap = getPreferenceBoolean(context, "button_swap", false);
 
                 FileUtils.writeLine(KernelControl.KEYCODE_SLIDER_TOP, sliderTop);
                 FileUtils.writeLine(KernelControl.KEYCODE_SLIDER_MIDDLE, sliderMiddle);
                 FileUtils.writeLine(KernelControl.KEYCODE_SLIDER_BOTTOM, sliderBottom);
-                FileUtils.writeLine(KernelControl.SLIDER_SWAP_NODE, sliderSwap ? "1" : "0");
+                FileUtils.writeLine(KernelControl.BUTTON_SWAP_NODE, buttonsSwap ? "1" : "0");
             }
     }
 

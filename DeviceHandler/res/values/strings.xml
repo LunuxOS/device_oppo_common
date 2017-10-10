@@ -37,6 +37,9 @@
     <string name="gesture_double_swipe_title">Double finger swipe down</string>
     <string name="gesture_double_tap_title">Double tap</string>
 
+    <!-- Buttons & Notification slider -->
+    <string name="advance_buttons_title">Buttons &amp; notification slider</string>
+
      <!-- Notification slider -->
     <string name="notification_slider">Notification slider</string>
     <string name="action">Action</string>
@@ -51,7 +54,9 @@
     <string name="vibrate">Vibrate</string>
     <string name="ring">Ring</string>
 
+    <!-- Buttons -->
     <string name="button_swap_title">Swap buttons</string>
     <string name="button_swap_summary">Swap the order of recents and back buttons</string>
+    <string name="buttons">Navigation buttons</string>
 
 </resources>

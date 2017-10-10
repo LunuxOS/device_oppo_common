@@ -16,10 +16,15 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
+    <PreferenceCategory
+        android:title="@string/buttons">
+
+        <SwitchPreference
         android:key="button_swap"
         android:title="@string/button_swap_title"
         android:summary="@string/button_swap_summary" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/notification_slider">

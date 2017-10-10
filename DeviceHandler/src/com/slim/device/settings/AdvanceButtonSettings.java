@@ -27,10 +27,10 @@ import com.slim.device.KernelControl;
 import com.slim.device.R;
 import com.slim.device.util.FileUtils;
 
-public class SliderSettings extends PreferenceActivity
+public class AdvanceButtonSettings extends PreferenceActivity
         implements OnPreferenceChangeListener {
 
-    private SwitchPreference mSliderSwap;
+    private SwitchPreference mButtonsSwap;
     private ListPreference mSliderTop;
     private ListPreference mSliderMiddle;
     private ListPreference mSliderBottom;
@@ -40,8 +40,8 @@ public class SliderSettings extends PreferenceActivity
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.slider_panel);
 
-        mSliderSwap = (SwitchPreference) findPreference("button_swap");
-        mSliderSwap.setOnPreferenceChangeListener(this);
+        mButtonsSwap = (SwitchPreference) findPreference("button_swap");
+        mButtonsSwap.setOnPreferenceChangeListener(this);
 
         mSliderTop = (ListPreference) findPreference("keycode_top_position");
         mSliderTop.setOnPreferenceChangeListener(this);
@@ -70,9 +70,9 @@ public class SliderSettings extends PreferenceActivity
             file = KernelControl.KEYCODE_SLIDER_MIDDLE;
         } else if (preference == mSliderBottom) {
             file = KernelControl.KEYCODE_SLIDER_BOTTOM;
-        } else if (preference == mSliderSwap) {
+        } else if (preference == mButtonsSwap) {
             Boolean value = (Boolean) newValue;
-            FileUtils.writeLine(KernelControl.SLIDER_SWAP_NODE, value ? "1" : "0");
+            FileUtils.writeLine(KernelControl.BUTTON_SWAP_NODE, value ? "1" : "0");
             return true;
         } else {
             return false;
