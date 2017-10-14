@@ -24,6 +24,16 @@
         android:title="@string/button_swap_title"
         android:summary="@string/button_swap_summary" />
 
+        <SwitchPreference
+            android:key="enable_navigation_bar"
+            android:title="@string/enable_navigation_bar_title" />
+
+        <com.slim.device.preferences.SystemSettingSwitchPreference
+            android:key="double_tap_sleep_navbar"
+            android:title="@string/double_tap_sleep_navbar"
+            android:dependency="enable_navigation_bar"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

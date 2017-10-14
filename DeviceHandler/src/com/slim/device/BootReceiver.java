@@ -54,11 +54,13 @@ public class BootReceiver extends BroadcastReceiver {
                 String sliderMiddle = getPreferenceString(context, "keycode_middle_position", "602");
                 String sliderBottom = getPreferenceString(context, "keycode_bottom_position", "603");
                 boolean buttonsSwap = getPreferenceBoolean(context, "button_swap", false);
+                boolean buttonDisableHW = getPreferenceBoolean(context, "enable_navigation_bar", false);
 
                 FileUtils.writeLine(KernelControl.KEYCODE_SLIDER_TOP, sliderTop);
                 FileUtils.writeLine(KernelControl.KEYCODE_SLIDER_MIDDLE, sliderMiddle);
                 FileUtils.writeLine(KernelControl.KEYCODE_SLIDER_BOTTOM, sliderBottom);
                 FileUtils.writeLine(KernelControl.BUTTON_SWAP_NODE, buttonsSwap ? "1" : "0");
+                FileUtils.writeLine(KernelControl.BUTTON_VIRTUAL_KEY_NODE, buttonDisableHW ? "1" : "0");
             }
     }
 

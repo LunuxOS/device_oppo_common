@@ -16,12 +16,15 @@
 
 package com.slim.device.settings;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.UserHandle; 
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.SwitchPreference;
+import android.provider.Settings;
 
 import com.slim.device.KernelControl;
 import com.slim.device.R;
@@ -31,6 +34,7 @@ public class AdvanceButtonsSettings extends PreferenceActivity
         implements OnPreferenceChangeListener {
 
     private SwitchPreference mButtonsSwap;
+    private SwitchPreference mNavbarToggle;
     private ListPreference mSliderTop;
     private ListPreference mSliderMiddle;
     private ListPreference mSliderBottom;
@@ -38,10 +42,18 @@ public class AdvanceButtonsSettings extends PreferenceActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.slider_panel);
+        addPreferencesFromResource(R.xml.adv_buttons);
 
         mButtonsSwap = (SwitchPreference) findPreference("button_swap");
         mButtonsSwap.setOnPreferenceChangeListener(this);
+
+        mNavbarToggle = (SwitchPreference) findPreference("enable_navigation_bar");
+	boolean enabled = Settings.Secure.getIntForUser(getContentResolver(), Settings.Secure.NAVIGATION_BAR_ENABLED,
+                getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar) ? 1 : 0,
+                UserHandle.USER_CURRENT) == 1;
+	mNavbarToggle.setChecked(enabled);
+	updateButtonSwapState(!enabled);
+        mNavbarToggle.setOnPreferenceChangeListener(this);
 
         mSliderTop = (ListPreference) findPreference("keycode_top_position");
         mSliderTop.setOnPreferenceChangeListener(this);
@@ -74,7 +86,16 @@ public class AdvanceButtonsSettings extends PreferenceActivity
             Boolean value = (Boolean) newValue;
             FileUtils.writeLine(KernelControl.BUTTON_SWAP_NODE, value ? "1" : "0");
             return true;
-        } else {
+        } else if (preference == mNavbarToggle) {
+            boolean value = (Boolean) newValue;
+            Settings.Secure.putIntForUser(getContentResolver(),
+                    Settings.Secure.NAVIGATION_BAR_ENABLED, value ? 1 : 0,
+                    UserHandle.USER_CURRENT);
+            mNavbarToggle.setChecked(value);
+	    updateButtonSwapState(!value);
+            FileUtils.writeLine(KernelControl.BUTTON_VIRTUAL_KEY_NODE, value ? "1" : "0");
+            return true;
+	} else {
             return false;
         }
 
@@ -82,6 +103,10 @@ public class AdvanceButtonsSettings extends PreferenceActivity
         setSummary((ListPreference) preference, file);
 
         return true;
+    }
+
+    private void updateButtonSwapState(boolean enable) {
+	mButtonsSwap.setEnabled(enable);
     }
 
     @Override

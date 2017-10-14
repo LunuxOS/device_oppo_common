@@ -55,8 +55,11 @@
     <string name="ring">Ring</string>
 
     <!-- Buttons -->
+    <string name="buttons">Navigation buttons</string>
     <string name="button_swap_title">Swap buttons</string>
     <string name="button_swap_summary">Swap the order of recents and back buttons</string>
-    <string name="buttons">Navigation buttons</string>
+    <string name="disable_buttons_backlight_title">Disable hw buttons backlight</string>
+    <string name="enable_navigation_bar_title">Enable navigation bar</string>
+    <string name="double_tap_sleep_navbar">Double tap to sleep on navbar</string>
 
 </resources>

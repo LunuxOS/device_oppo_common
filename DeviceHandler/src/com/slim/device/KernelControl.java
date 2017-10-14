@@ -41,6 +41,7 @@ public final class KernelControl {
 
     // Notification slider
     public static final String BUTTON_SWAP_NODE = "/proc/s1302/key_rep";
+    public static final String BUTTON_VIRTUAL_KEY_NODE = "/proc/s1302/virtual_key";
     public static final String KEYCODE_SLIDER_TOP = "/proc/tri-state-key/keyCode_top";
     public static final String KEYCODE_SLIDER_MIDDLE = "/proc/tri-state-key/keyCode_middle";
     public static final String KEYCODE_SLIDER_BOTTOM = "/proc/tri-state-key/keyCode_bottom";
