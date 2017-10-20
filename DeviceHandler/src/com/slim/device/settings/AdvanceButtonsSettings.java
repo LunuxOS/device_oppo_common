@@ -17,8 +17,10 @@
 package com.slim.device.settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.UserHandle; 
+import android.os.UserHandle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -32,8 +34,14 @@ import com.slim.device.util.FileUtils;
 
 public class AdvanceButtonsSettings extends PreferenceActivity
         implements OnPreferenceChangeListener {
+	
+    private SharedPreferences sharedpreferences;
+
+    private final String APP_PREFERENCES = "com.slim.device_preferences" ;
+    private final String BUTTON_BACKLIGHT_DEFAULT_KEY = "hw_backlight_state";
 
     private SwitchPreference mButtonsSwap;
+    private SwitchPreference mDisableBacklight;
     private SwitchPreference mNavbarToggle;
     private ListPreference mSliderTop;
     private ListPreference mSliderMiddle;
@@ -44,8 +52,13 @@ public class AdvanceButtonsSettings extends PreferenceActivity
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.adv_buttons);
 
+        sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
         mButtonsSwap = (SwitchPreference) findPreference("button_swap");
         mButtonsSwap.setOnPreferenceChangeListener(this);
+
+        mDisableBacklight = (SwitchPreference) findPreference("disable_hw_button_backlight");
+        mDisableBacklight.setOnPreferenceChangeListener(this);
 
         mNavbarToggle = (SwitchPreference) findPreference("enable_navigation_bar");
 	boolean enabled = Settings.Secure.getIntForUser(getContentResolver(), Settings.Secure.NAVIGATION_BAR_ENABLED,
@@ -53,6 +66,7 @@ public class AdvanceButtonsSettings extends PreferenceActivity
                 UserHandle.USER_CURRENT) == 1;
 	mNavbarToggle.setChecked(enabled);
 	updateButtonSwapState(!enabled);
+	updateButtonBacklightState(enabled, 0);
         mNavbarToggle.setOnPreferenceChangeListener(this);
 
         mSliderTop = (ListPreference) findPreference("keycode_top_position");
@@ -86,6 +100,10 @@ public class AdvanceButtonsSettings extends PreferenceActivity
             Boolean value = (Boolean) newValue;
             FileUtils.writeLine(KernelControl.BUTTON_SWAP_NODE, value ? "1" : "0");
             return true;
+        } else if (preference == mDisableBacklight) {
+            Boolean value = (Boolean) newValue;
+	    updateButtonBacklightState(value, 1);
+            return true;
         } else if (preference == mNavbarToggle) {
             boolean value = (Boolean) newValue;
             Settings.Secure.putIntForUser(getContentResolver(),
@@ -93,6 +111,7 @@ public class AdvanceButtonsSettings extends PreferenceActivity
                     UserHandle.USER_CURRENT);
             mNavbarToggle.setChecked(value);
 	    updateButtonSwapState(!value);
+	    updateButtonBacklightState(value, 0);
             FileUtils.writeLine(KernelControl.BUTTON_VIRTUAL_KEY_NODE, value ? "1" : "0");
             return true;
 	} else {
@@ -109,12 +128,38 @@ public class AdvanceButtonsSettings extends PreferenceActivity
 	mButtonsSwap.setEnabled(enable);
     }
 
+    private void updateButtonBacklightState(boolean enable, int src) {
+	switch (src) {
+	    case 0:
+		boolean originalState = sharedpreferences.getBoolean(BUTTON_BACKLIGHT_DEFAULT_KEY, false);
+		if (enable) {
+		    mDisableBacklight.setChecked(enable);
+		    disableBacklight(enable);
+		}
+		else {
+		    mDisableBacklight.setChecked(originalState);
+		    disableBacklight(originalState);
+		}
+		break;
+	    case 1:
+		Editor editor = sharedpreferences.edit();
+		editor.putBoolean(BUTTON_BACKLIGHT_DEFAULT_KEY, enable);
+		editor.apply();
+		disableBacklight(enable);
+		break;
+	}
+    }
+
+    private void disableBacklight(boolean disable) {
+	FileUtils.writeLine(KernelControl.BUTTON_BACKLIGHT_NODE, disable ? "0" : "5");
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
         // Remove padding around the listview
-            getListView().setPadding(0, 0, 0, 0);
+        getListView().setPadding(0, 0, 0, 0);
 
         setSummary(mSliderTop, KernelControl.KEYCODE_SLIDER_TOP);
         setSummary(mSliderMiddle, KernelControl.KEYCODE_SLIDER_MIDDLE);

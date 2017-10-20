@@ -51,6 +51,21 @@
                 android:value="com.android.settings.category.ia.homepage" />
         </activity>
 
+        <activity
+            android:name=".settings.LunuxOSExtensions"
+            android:theme="@style/DeviceHandlerTheme"
+            android:label="@string/lunuxos_extensions_title">
+            <intent-filter>
+                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+            </intent-filter>
+            <!-- <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_additional_buttons" /> -->
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.homepage" />
+        </activity>
+
         <receiver android:name=".BootReceiver" >
           <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

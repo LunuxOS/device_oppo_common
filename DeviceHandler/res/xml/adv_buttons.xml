@@ -20,9 +20,13 @@
         android:title="@string/buttons">
 
         <SwitchPreference
-        android:key="button_swap"
-        android:title="@string/button_swap_title"
-        android:summary="@string/button_swap_summary" />
+            android:key="button_swap"
+            android:title="@string/button_swap_title"
+            android:summary="@string/button_swap_summary" />
+
+        <com.slim.device.preferences.SystemSettingSwitchPreference
+            android:key="disable_hw_button_backlight"
+            android:title="@string/disable_buttons_backlight_title" />
 
         <SwitchPreference
             android:key="enable_navigation_bar"

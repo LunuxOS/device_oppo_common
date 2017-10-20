@@ -62,4 +62,12 @@
     <string name="enable_navigation_bar_title">Enable navigation bar</string>
     <string name="double_tap_sleep_navbar">Double tap to sleep on navbar</string>
 
+    <!-- LunuxOS Extensions -->
+    <string name="lunuxos_extensions_title">LunuxOS Extensions</string>
+
+    <!-- Statusbar -->
+    <string name="statusbar_mods">Statusbar mods</string>
+    <string name="network_traffic_state_title">Show net activity in statusbar</string>
+    <string name="network_traffic_autohide_threshold_title">Net activity autohide threshold (KB/s)</string>
+
 </resources>
